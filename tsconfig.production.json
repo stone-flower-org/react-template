@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "skipLibCheck": true
+  },
+  "exclude": [
+    "node_modules",
+    "src/boot/servers.ts",
+    "src/utils/servers/**/*",
+    "src/utils/tests/**/*",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+  ]
+}
