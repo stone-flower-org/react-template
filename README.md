@@ -2,7 +2,39 @@
 
 ## Description
 
-React Template
+React Template is a template for a react application with pre-configured base development setup: bundler, linter, unit tests, dev scripts and some very common components based on @mui.
+
+The template proposes to use features/modules folder structure, where all features should be devided by folders in `src/modules`. It already includes next features:
+
+1. `src/modules/app` - core of the application, where all new routes, providers, services and all other features should be registered
+2. `src/modules/common` - common utils (components, modules, etc.) which can be used in other features
+3. `src/modules/tests` - common test utils which can be used in unit test in other features
+
+All global types and type overrides are placed in `src/types`.
+
+### The Copying Checklist
+
+- [ ] Clone the template
+- [ ] Update package.json
+  - [ ] name
+  - [ ] version
+  - [ ] description
+  - [ ] repository
+  - [ ] author
+  - [ ] license
+  - [ ] private
+- [ ] Update index.html
+  - [ ] Title
+  - [ ] Description
+- [ ] Replace logo images in `./public/static/img`
+- [ ] Update `./public/manifest.json`
+  - [ ] name
+  - [ ] short_name
+- [ ] Update docs/pull_request_template.md
+- [ ] Update README.md
+  - [ ] Update title
+  - [ ] Update description
+  - [ ] Remove The Copying Checklist
 
 ## Installation
 
@@ -37,10 +69,9 @@ OS: macOS, Linux
 
 1. Open terminal and go to project's folder
 2. Run `yarn install` to load all deps
-3. Set custom configs in `./configs/*.local.json` files (in case of local ports conflicts)
+3. Set custom configs in `./configs/*.local.json` files
 4. Run `yarn start` to run dev server
-5. In separate terminal in project's folder run `yarn proxy` to run proxy server (to bypass CORS)
-6. Open `http://localhost:3000` in browser to test
+5. Open `http://localhost:3000` in browser to test
 
 ## Configs
 
@@ -60,7 +91,7 @@ Builds static files (html, js bundles, etc.) in `./dist` folder from sources
 
 #### ENV Variables
 
-DEV_MODE - environment. Can be `development` and `production`. By default - `development`
+1. DEV_MODE - environment. Can be `development` and `production`. By default - `development`
 
 ### yarn clean
 
@@ -82,11 +113,18 @@ Checks all source files according to eslint configs
 
 Formats all source files according to eslint configs
 
+### yarn lint-staged
+
+Checks staged source files according to eslint configs
+
 ### yarn proxy
 
 Runs local proxy server to bypass CORS validation
 
-See `Configs` section to configure local port and destination address
+#### ENV Variables
+
+1. DEST_URL - destination address to proxy
+2. PROXY_URL - address which will proxy requests. By default - `http://localhost:8080`
 
 ### yarn start
 
@@ -97,7 +135,7 @@ Runs dev server on given port with given host name. Should be used during develo
 1. DEV_MODE - environment. Can be `development` and `production`. By default - `development`
 2. DEV_HOST - dev server's host name. By default - `localhost`
 3. DEV_PORT - dev server's port. By default - `3000`
-4. MOCK_API - use mocked data instead any API calls
+4. DEV_MOCK_API - use mocked data instead any API calls
 
 ### yarn test
 
@@ -105,7 +143,11 @@ Runs all unit tests. App will use `development` DEV_MODE during tests
 
 ### yarn test-coverage
 
-Runs all unit tests and generates tests coverage report in `./report` folder. Command will use the same environment vars as `yarn test` command
+Runs all unit tests and generates tests coverage report in `./report/coverage` folder. Command will use the same environment vars as `yarn test` command
+
+### yarn typecheck
+
+Validates TS types in all source files
 
 ### ./scripts/docker-build.sh
 
@@ -130,7 +172,7 @@ Removes all docker resources related to the app
 
 #### Examples
 
-1. `./scripts/docker-clean.sh` - removes all docker resources related to the app 
+1. `./scripts/docker-clean.sh` - removes all docker resources related to the app
 2. `SEARCH_KEY=app-custom` - removes all docker resources related to the app using custom `SEARCH_KEY`. Can be useful in case when custom tags names were used to create images and containers
 
 ### ./scripts/docker-run.sh
@@ -139,7 +181,7 @@ Runs docker container with given tag and env on given port. Will remove currentl
 
 #### ENV Variables
 
-1. APP_PORT - local port, on which container will run. By default - `3000` 
+1. APP_PORT - local port, on which container will run. By default - `3000`
 2. CONFIGS_PATH - directory with custom configs. If provided, will be created temp anonymous volume with specified local dir. By default - ``
 3. ENV - using environment. Can be `stage`, `production` and `development`. By default - `stage`
 4. TAG - image tag name of the app. By default - `${name}:latest`

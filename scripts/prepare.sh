@@ -1,12 +1,13 @@
 #!/bin/sh
 
-cd "$(dirname "${BASH_SOURCE[0]}")" && cd ../
+cd "$(dirname $0)" && cd ../
 
 echo "Info: Trying to install husky deps"
 yarn husky install
 
 echo "Info: Creating local configs"
-CONFIGS="config"
-for config_name in ${CONFIGS}; do
-  cp ./configs/$config_name.development.json ./configs/$config_name.local.json
+CONFIGS=$(ls "./configs" | grep ".development.json")
+for config in ${CONFIGS}; do
+  LOCAL_CONFIG_NAME=$(echo $config | sed "s/.development.json/.local.json/g")
+  cp ./configs/$config ./configs/$LOCAL_CONFIG_NAME
 done

@@ -1,78 +1,136 @@
-module.exports = {
+const prettierConf = require('./.prettierrc');
+
+const srcOverride = {
   env: {
     browser: true,
-    es2020: true,
-    'jest/globals': true,
+    es6: true,
+    node: false,
   },
   extends: [
-    'eslint:recommended',
-    'plugin:import/errors',
-    'plugin:import/warnings',
-    'plugin:import/typescript',
+    'plugin:jsx-a11y/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
-    'plugin:jest/recommended',
-    'plugin:jest-dom/recommended',
     'plugin:@typescript-eslint/recommended',
   ],
+  rules: {
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
+    'no-unused-vars': 'off', // conflicts with @typescript-eslint/no-unused-vars
+    'react/jsx-boolean-value': ['error'],
+    'react/jsx-sort-props': 'error',
+    'react/prop-types': 'off',
+    'react/self-closing-comp': [
+      'error',
+      {
+        component: true,
+        html: true,
+      },
+    ],
+    '@typescript-eslint/no-empty-interface': ['off'],
+    '@typescript-eslint/no-explicit-any': ['warn'],
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      {
+        args: 'after-used',
+        argsIgnorePattern: '^_',
+        destructuredArrayIgnorePattern: '^_',
+        ignoreRestSiblings: true,
+      },
+    ],
+  },
+};
+
+module.exports = {
+  env: {
+    es6: true,
+    node: true,
+  },
+  extends: ['eslint:recommended', 'plugin:import/recommended', 'plugin:prettier/recommended'],
   ignorePatterns: ['dist/*', 'public/*'],
   overrides: [
+    // sources
     {
-      env: {
+      env: srcOverride.env,
+      extends: srcOverride.extends,
+      files: ['src/**'],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        ecmaVersion: 12,
+        project: './tsconfig.json',
+        sourceType: 'module',
+      },
+      rules: srcOverride.rules,
+    },
+    // tests
+    {
+      env: Object.assign(srcOverride.env, {
         node: true,
+        'vitest-globals/env': true,
+      }),
+      extends: [...srcOverride.extends, 'plugin:vitest/recommended', 'plugin:vitest-globals/recommended'],
+      files: ['src/**/*.test.{js,jsx,ts,tsx}', 'src/modules/app/tests-utils/**'],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        ecmaVersion: 12,
+        project: './tsconfig.json',
+        sourceType: 'module',
       },
-      files: ['*.js'],
-      parser: 'esprima',
-      rules: {
-        '@typescript-eslint/no-var-requires': 'off',
-      },
+      rules: Object.assign(srcOverride.rules, {}),
     },
   ],
-  parserOptions: {
-    ecmaVersion: 11,
-    project: 'tsconfig.json',
-    sourceType: 'module',
-  },
-  plugins: ['@typescript-eslint', 'import', 'prettier', 'react', 'react-hooks', 'jest', 'jest-dom', '@emotion'],
+  parser: 'esprima',
+  plugins: ['@typescript-eslint', 'import', 'jsx-a11y', 'prettier', 'react', 'react-hooks', 'vitest'],
+  root: true,
   rules: {
     'arrow-body-style': ['error', 'as-needed'],
     'import/order': [
       'error',
       {
-        alphabetize: { order: 'asc' },
+        alphabetize: {
+          order: 'asc',
+        },
         groups: ['builtin', 'external', 'parent', ['sibling', 'index'], 'object', 'type'],
         'newlines-between': 'always',
         pathGroups: [
           {
-            pattern: '@src/**',
+            pattern: '@/src/**',
+            group: 'parent',
+            position: 'before',
+          },
+          {
+            pattern: '@/public/**',
             group: 'parent',
             position: 'before',
           },
         ],
       },
     ],
+    'max-len': [
+      'error',
+      {
+        code: 120,
+        ignoreComments: true,
+        ignoreStrings: true,
+        ignoreTrailingComments: true,
+        ignoreUrls: true,
+      },
+    ],
     'multiline-ternary': 'off',
     'no-restricted-imports': [
       'error',
       {
-        patterns: ['../../'],
+        patterns: ['../'],
       },
     ],
-    'prettier/prettier': [
-      'error',
+    'no-var': ['error'],
+    'no-unused-vars': [
+      'warn',
       {
-        printWidth: 120,
-        tabWidth: 2,
-        semi: true,
-        singleQuote: true,
-        trailingComma: 'es5',
-        singleAttributePerLine: true,
+        argsIgnorePattern: '^_',
+        destructuredArrayIgnorePattern: '^_',
       },
     ],
-    'react/self-closing-comp': ['error', { component: true, html: true }],
-    '@emotion/syntax-preference': [2, 'string'],
-    '@typescript-eslint/no-empty-interface': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
+    'prefer-const': 'error',
+    'prettier/prettier': ['error', prettierConf],
   },
   settings: {
     'import/resolver': {

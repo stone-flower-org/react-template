@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd "$(dirname "${BASH_SOURCE[0]}")" && cd ../
+cd "$(dirname $0)" && cd ../
 
 read -r APP_NAME _ <<< $( ./scripts/app-info.sh )
 

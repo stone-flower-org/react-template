@@ -11,18 +11,22 @@
 .Trash-*
 .nfs*
 
-# VS Code
-.vscode
-.history
-*.vsix
-
-# JetBrains
-.idea
-
 # Project
-.husky
-dist
-docs
-node_modules
-README.md
-report
+/*
+configs/config.local.json
+
+!configs
+!docker
+!public
+!scripts
+!src
+!.dockerignore
+!Dockerfile
+!index.html
+!package.json
+!tsconfig.json
+!tsconfig.production.json
+!vite.config.js
+!vitest-setup.js
+!vitest.config.js
+!yarn.lock

@@ -5,10 +5,9 @@
   },
   "exclude": [
     "node_modules",
-    "src/boot/servers.ts",
-    "src/utils/servers/**/*",
-    "src/utils/tests/**/*",
+    "src/modules/app/boot/servers.ts",
+    "src/modules/tests/**/*",
     "**/*.test.ts",
-    "**/*.test.tsx",
+    "**/*.test.tsx"
   ]
 }
