@@ -97,11 +97,11 @@ Builds static files (html, js bundles, etc.) in `./dist` folder from sources
 
 Removes all generated files (build, reports, etc.) from project's folder
 
-### yarn clean-build
+### yarn clean:build
 
 Removes generated static files from project's folder
 
-### yarn clean-report
+### yarn clean:report
 
 Removes generated report files from project's folder
 
@@ -109,11 +109,11 @@ Removes generated report files from project's folder
 
 Checks all source files according to eslint configs
 
-### yarn lint-format
+### yarn lint:format
 
 Formats all source files according to eslint configs
 
-### yarn lint-staged
+### yarn lint:staged
 
 Checks staged source files according to eslint configs
 
@@ -141,7 +141,7 @@ Runs dev server on given port with given host name. Should be used during develo
 
 Runs all unit tests. App will use `development` DEV_MODE during tests
 
-### yarn test-coverage
+### yarn test:coverage
 
 Runs all unit tests and generates tests coverage report in `./report/coverage` folder. Command will use the same environment vars as `yarn test` command
 
