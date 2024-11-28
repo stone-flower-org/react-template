@@ -1,7 +1,7 @@
 module.exports = {
   collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
   coverageDirectory: 'report/coverage',
-  coveragePathIgnorePatterns: ['<rootDir>/src/utils/tests/'],
+  coveragePathIgnorePatterns: ['<rootDir>/src/features/app/tests-utils/'],
   coverageThreshold: {
     global: {
       statements: 75,
@@ -13,8 +13,8 @@ module.exports = {
   moduleDirectories: ['node_modules'],
   moduleNameMapper: {
     '^@src(.*)$': '<rootDir>/src$1',
-    '\\.svg$': '<rootDir>/src/utils/tests/mocks/svg.ts',
-    '\\.css$': '<rootDir>/src/utils/tests/mocks/styles.ts',
+    '\\.svg$': '<rootDir>/src/features/app/tests-utils/mocks/svg.ts',
+    '\\.css$': '<rootDir>/src/features/app/tests-utils/mocks/styles.ts',
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   snapshotSerializers: ['@emotion/jest/serializer'],

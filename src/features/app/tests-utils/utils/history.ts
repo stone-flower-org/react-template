@@ -1,0 +1,1 @@
+export { createMemoryHistory } from 'history';

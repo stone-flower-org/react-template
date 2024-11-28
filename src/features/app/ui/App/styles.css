@@ -1,0 +1,32 @@
+/* Initial styles before app renders */
+
+#app {
+  height: 100vh;
+  width: 100vw;
+}
+
+#app:empty::after {
+  animation: circle-loader-spin 0.5s linear infinite;
+  border: 2px solid #e5e5e5;
+  border-left-color: #ffb800;
+  border-radius: 50%;
+  content: "";
+  display: flex;
+  margin: auto;
+  position: absolute;
+  transform: translateZ(0);
+  height: calc(3rem - 4px);
+  width: calc(3rem - 4px);
+  top: calc(50% - 1.5rem + 2px);
+  left: calc(50% - 1.5rem + 2px);
+}
+
+@keyframes circle-loader-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(1turn);
+  }
+}

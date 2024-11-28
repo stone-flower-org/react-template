@@ -1,9 +1,10 @@
+/* eslint-disable no-undef */
 const { matchers } = require('@emotion/jest');
 const { configure } = require('@testing-library/dom');
 require('@testing-library/jest-dom');
 
-require('./src/utils/tests/register-mocks'); // important to register global mocks before their actual imports
-const { boot, serverProvider } = require('./src/utils/tests');
+require('./src/features/app/tests-utils/register-mocks'); // important to register global mocks before their actual imports
+const { boot, serverProvider } = require('./src/features/app/tests-utils/boot');
 
 configure({
   asyncUtilTimeout: 4000,

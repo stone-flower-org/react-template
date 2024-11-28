@@ -120,5 +120,5 @@ module.exports = merge(
       symlinks: false,
     },
   },
-  envConfig
+  envConfig,
 );

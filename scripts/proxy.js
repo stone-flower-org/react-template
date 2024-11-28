@@ -1,9 +1,4 @@
-const fs = require('fs');
 const http = require('http');
-const path = require('path');
-
-const CONFIGS_PATH = path.resolve(__filename, '../../configs');
-const APP_CONFIGS_PATH = path.join(CONFIGS_PATH, 'config.local.json');
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -14,15 +9,21 @@ const CORS_HEADERS = {
 
 class ProxyServer {
   constructor({ destUrl, name, serverUrl }) {
-    this._name = name || 'ProxyServer';
-    this._serverUrl = new URL(serverUrl);
-    this._destUrl = new URL(destUrl);
+    if (!destUrl) throw new Error('destUrl config is required');
+    if (!serverUrl) throw new Error('serverUrl config is required');
+
+    this._config = {
+      destUrl: new URL(destUrl),
+      name: name || 'ProxyServer',
+      serverUrl: new URL(serverUrl),
+    };
+
     this._server = http.createServer(this._handleRequest.bind(this));
   }
 
   async _handleRequest(inputReq, outRes) {
     try {
-      const request = await this._inputReqToRequest(inputReq);
+      const request = await this._normalizeRequest(inputReq);
       await this._proxyRequest(outRes, request);
     } catch (error) {
       console.error(error);
@@ -45,7 +46,7 @@ class ProxyServer {
     this._sendResponse(outRes, proxiedResponse);
   }
 
-  async _inputReqToRequest(inputReq) {
+  async _normalizeRequest(inputReq) {
     return await new Promise((resolve) => {
       const chunks = [];
       inputReq.on('data', (chunk) => {
@@ -60,7 +61,7 @@ class ProxyServer {
           body: Buffer.concat(chunks),
           headers: inputReq.headers,
           method: inputReq.method,
-          url: new URL(`${this._serverUrl}${path}`),
+          url: new URL(`${this._config.serverUrl}${path}`),
         });
       });
     });
@@ -92,7 +93,7 @@ class ProxyServer {
               };
               resolve(response);
             });
-          }
+          },
         )
         .on('error', (error) => {
           reject(error);
@@ -120,7 +121,7 @@ class ProxyServer {
       delete request.headers[header];
     });
     return Object.assign(request, {
-      url: new URL(`${this._destUrl.origin}${request.url.pathname}${request.url.search}`),
+      url: new URL(`${this._config.destUrl.origin}${request.url.pathname}${request.url.search}`),
       headers: Object.assign(request.headers, {}),
     });
   }
@@ -149,17 +150,20 @@ class ProxyServer {
   }
 
   start() {
-    this._server.listen(this._serverUrl.port, this._serverUrl.hostname, () => {
-      console.log(`${this._name} is running at ${this._serverUrl}`);
+    this._server.listen(this._config.serverUrl.port, this._config.serverUrl.hostname, () => {
+      console.log(`${this._config.name} is running at ${this._config.serverUrl}`);
     });
   }
 }
 
 function main() {
-  const appConfigs = JSON.parse(fs.readFileSync(APP_CONFIGS_PATH, 'utf8'));
-  if (!appConfigs.PROXY_URL || !appConfigs.PROXY_DEST_URL) throw new Error('Proxy server is not configured');
+  const DEST_URL = process.env.DEST_URL;
+  const PROXY_URL = process.env.PROXY_URL || 'http://localhost:8080';
 
-  const proxyServer = new ProxyServer({ destUrl: appConfigs.PROXY_DEST_URL, serverUrl: appConfigs.PROXY_URL });
+  const proxyServer = new ProxyServer({
+    destUrl: DEST_URL,
+    serverUrl: PROXY_URL,
+  });
   proxyServer.start();
 
   process.on('exit', (code) => {

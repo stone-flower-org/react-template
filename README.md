@@ -130,7 +130,7 @@ Removes all docker resources related to the app
 
 #### Examples
 
-1. `./scripts/docker-clean.sh` - removes all docker resources related to the app 
+1. `./scripts/docker-clean.sh` - removes all docker resources related to the app
 2. `SEARCH_KEY=app-custom` - removes all docker resources related to the app using custom `SEARCH_KEY`. Can be useful in case when custom tags names were used to create images and containers
 
 ### ./scripts/docker-run.sh
@@ -139,7 +139,7 @@ Runs docker container with given tag and env on given port. Will remove currentl
 
 #### ENV Variables
 
-1. APP_PORT - local port, on which container will run. By default - `3000` 
+1. APP_PORT - local port, on which container will run. By default - `3000`
 2. CONFIGS_PATH - directory with custom configs. If provided, will be created temp anonymous volume with specified local dir. By default - ``
 3. ENV - using environment. Can be `stage`, `production` and `development`. By default - `stage`
 4. TAG - image tag name of the app. By default - `${name}:latest`
