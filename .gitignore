@@ -24,6 +24,7 @@ configs/config.local.json
 !src
 !.dockerignore
 !.eslintrc.js
+!.gitignore
 !.prettierrc.js
 !Dockerfile
 !index.html
