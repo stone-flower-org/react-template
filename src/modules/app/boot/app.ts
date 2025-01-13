@@ -1,4 +1,4 @@
-import { App as AppContainer } from '@stone-flower-org/js-app';
+import { App as AppContainer, ConsoleLogger, LoggerErrorReporter, ServiceProvider } from '@stone-flower-org/js-app';
 import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -12,11 +12,21 @@ import { luxonProvider } from './luxon';
 import { routerProvider, routesStoreProvider } from './router';
 import { storeProvider } from './store';
 
-export const app = AppContainer.createFromFunc<AppServices>(() => {
-  const appEl = document.getElementById(APP_ELEMENT_ID);
-  if (!appEl) throw new Error(`Couldn't find #${APP_ELEMENT_ID} element`);
-  createRoot(appEl).render(createElement(AppComponent));
-});
+const logger = ConsoleLogger.create();
+
+export const app = new AppContainer<AppServices>(
+  () => {
+    const appEl = document.getElementById(APP_ELEMENT_ID);
+    if (!appEl) throw new Error(`Couldn't find #${APP_ELEMENT_ID} element`);
+    createRoot(appEl).render(createElement(AppComponent));
+  },
+  {
+    coreProviders: {
+      'error-reporter': ServiceProvider.create(LoggerErrorReporter.createFromLogger(logger)),
+      logger: ServiceProvider.create(logger),
+    },
+  },
+);
 
 app.registerProvider('configs', configsProvider);
 app.registerProvider('date', luxonProvider);
