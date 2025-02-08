@@ -1,4 +1,4 @@
-import { App as AppContainer, ConsoleLogger, LoggerErrorReporter, ServiceProvider } from '@stone-flower-org/js-app';
+import { App as AppContainer } from '@stone-flower-org/js-app';
 import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -8,11 +8,11 @@ import { AppServices } from '@/src/modules/app/utils/app';
 
 import { axiosProvider } from './axios';
 import { configsProvider } from './configs';
+import { errorReporterProvider } from './error-reporter';
+import { loggerProvider } from './logger';
 import { luxonProvider } from './luxon';
 import { routerProvider, routesStoreProvider } from './router';
 import { storeProvider } from './store';
-
-const logger = ConsoleLogger.create();
 
 export const app = new AppContainer<AppServices>(
   () => {
@@ -22,8 +22,8 @@ export const app = new AppContainer<AppServices>(
   },
   {
     coreProviders: {
-      'error-reporter': ServiceProvider.create(LoggerErrorReporter.createFromLogger(logger)),
-      logger: ServiceProvider.create(logger),
+      errorReporter: errorReporterProvider,
+      logger: loggerProvider,
     },
   },
 );

@@ -23,6 +23,8 @@ export interface AppServices {
   store: RootStore;
   router: Router;
   routesStore: RoutesStore;
+  logger: ILogger;
+  errorReporter: IErrorReporter;
 }
 
 export type AppServicesKey = keyof AppServices;
