@@ -1,4 +1,4 @@
-import { http, HttpResponse, HttpResponseInit, JsonBodyType, RequestHandler, ResponseResolver } from 'msw';
+import { HttpResponse, HttpResponseInit, http, JsonBodyType, RequestHandler, ResponseResolver } from 'msw';
 
 import { Middleware, Route, Router } from './types';
 

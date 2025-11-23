@@ -1,17 +1,16 @@
 import { createProgress } from '@stone-flower-org/js-utils';
+import type {
+  RenderHookOptions as BaseRenderHookOptions,
+  RenderOptions as BaseRenderOptions,
+} from '@testing-library/react';
 import { render as baseRender, renderHook as baseRenderHook } from '@testing-library/react';
 import React, { ReactElement, ReactNode } from 'react';
 
 import { AppProvider, AppProviderProps } from '@/src/modules/tests/components';
-import { RenderOptions, RenderHookOptions } from '@/src/modules/tests/types';
+import { RenderHookOptions, RenderOptions } from '@/src/modules/tests/types';
 
 import { createMemoryHistory } from './history';
 import { queries } from './queries';
-
-import type {
-  RenderOptions as BaseRenderOptions,
-  RenderHookOptions as BaseRenderHookOptions,
-} from '@testing-library/react';
 
 const makeRendererWrapper = (props: AppProviderProps) =>
   function wrapper({ children }: { children?: ReactNode }) {

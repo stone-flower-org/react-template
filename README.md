@@ -107,15 +107,15 @@ Removes generated report files from project's folder
 
 ### yarn lint
 
-Checks all source files according to eslint configs
+Checks all source files according to linter configs
 
 ### yarn lint:format
 
-Formats all source files according to eslint configs
+Formats all source files according to lintert configs
 
 ### yarn lint:staged
 
-Checks staged source files according to eslint configs
+Checks staged source files according to linter configs
 
 ### yarn proxy
 

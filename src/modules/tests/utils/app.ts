@@ -1,5 +1,3 @@
-/* eslint-disable import/no-unresolved */
-
 import { ServiceProvider } from '@stone-flower-org/js-app';
 import { SetupServer } from 'msw/lib/node';
 

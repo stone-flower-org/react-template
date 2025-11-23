@@ -1,9 +1,7 @@
 import { Router } from '@remix-run/router';
 import { type IErrorReporter, type ILogger } from '@stone-flower-org/js-app';
 import { Axios } from 'axios';
-// eslint-disable-next-line import/no-unresolved
 import { SetupWorker } from 'msw/lib/browser';
-// eslint-disable-next-line import/no-unresolved
 import { SetupServer } from 'msw/lib/node';
 
 import { configsProvider } from '@/src/modules/app/boot/configs';
@@ -18,12 +16,10 @@ export interface AppServices {
   date: ReturnType<typeof luxonProvider.get>;
   http: Axios;
   logger: ILogger;
-  'error-reporter': IErrorReporter;
   server: SetupWorker | SetupServer;
   store: RootStore;
   router: Router;
   routesStore: RoutesStore;
-  logger: ILogger;
   errorReporter: IErrorReporter;
 }
 

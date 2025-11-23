@@ -1,3 +1,4 @@
+import type { Progress } from '@stone-flower-org/js-utils';
 import { createProgress } from '@stone-flower-org/js-utils';
 import React, { FC, ReactNode } from 'react';
 import { Router } from 'react-router-dom';
@@ -5,8 +6,6 @@ import { Router } from 'react-router-dom';
 import { AppProviders } from '@/src/modules/app/ui/components/App/AppProviders';
 import { AppBootProvider } from '@/src/modules/app/ui/context/AppBootProvider';
 import { createMemoryHistory, MemoryHistory } from '@/src/modules/tests/utils';
-
-import type { Progress } from '@stone-flower-org/js-utils';
 
 export interface AppProviderProps {
   children?: ReactNode;

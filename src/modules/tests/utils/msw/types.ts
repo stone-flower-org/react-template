@@ -1,4 +1,4 @@
-import { ResponseResolver, http } from 'msw';
+import { http, ResponseResolver } from 'msw';
 
 export interface Route {
   method: keyof typeof http;

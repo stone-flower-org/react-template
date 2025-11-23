@@ -35,5 +35,4 @@ app.registerProvider('store', storeProvider);
 app.registerProvider('routesStore', routesStoreProvider);
 app.registerProvider('router', routerProvider);
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 if (process.env.DEV_MOCK_API === 'true') app.registerProvider('server', require('./servers').serverProvider);
